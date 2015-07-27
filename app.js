@@ -16,7 +16,6 @@ function($stateProvider, $urlRouterProvider) {
     	templateUrl: '/posts.html',
     	controller: 'PostsCtrl'
     });
-
   $urlRouterProvider.otherwise('home');
 }]);
 
