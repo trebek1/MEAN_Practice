@@ -32,24 +32,36 @@ o.getAll = function(){
     angular.copy(data, o.posts);// from data to o.posts; 
   })
 }
+o.create = function(posts){
+  return $http.post('/posts', posts).success(function(data){
+    o.posts.push(data);
+  })
+}
+o.upvote = function(post){
+  return $http.put('/posts/' + post._id + '/upvote').success(function(data){
+    post.upvotes +=1; 
+  })
+}
 return o;
 }]);
 
 app.controller('MainCtrl', ['$scope', 'posts',function($scope, posts){
   $scope.test = 'Hello world!';
   $scope.posts = posts.posts;  
+  
   $scope.addPost = function(){
   	if(!$scope.title || $scope.title === ''){
   	 return; 
   	}
-  	$scope.posts.push({title: $scope.title, link: $scope.link, upvotes: 0,
-  		comments:[ {author: 'Joe', body: 'Cool post!', upvotes: 0},
-    {author: 'Bob', body: 'Great idea but everything is wrong!', upvotes: 0}]}); 
+  	posts.create({
+     title: $scope.title,
+     link: $scope.link
+   }); 
   	$scope.title = '';
   	$scope.link = '';
   	};
   $scope.incrementUpvotes = function(post){
-  	post.upvotes += 1; 
+  	posts.upvote(post);
   };
   
 }]);	
