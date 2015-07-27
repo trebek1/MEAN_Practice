@@ -53,7 +53,7 @@ router.param('comment', function(req,res,next,id){
 
 router.get('/posts/:post', function(req,res){
 	req.post.populate('comments', function(err,post){
-		req.json(post);
+		res.json(post);
 	});
 });
 
