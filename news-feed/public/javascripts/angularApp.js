@@ -165,9 +165,10 @@ function($scope, $state, auth){
   };
 }])
 
-app.controller('MainCtrl', ['$scope', 'posts',function($scope, posts){
+app.controller('MainCtrl', ['$scope', 'posts', 'auth', function($scope, posts, auth){
   $scope.test = 'Hello world!';
   $scope.posts = posts.posts;  
+  $scope.isLoggedIn = auth.isLoggedIn;
   
   $scope.addPost = function(){
   	if(!$scope.title || $scope.title === ''){
@@ -200,7 +201,9 @@ app.controller('PostsCtrl', [
 '$stateParams',
 'posts',
 'post',
-function($scope,$stateParams,posts,post){
+'auth',
+function($scope,$stateParams,posts,post,auth){
+$scope.isLoggedIn = auth.isLoggedIn;  
 $scope.post = post; 
 $scope.addComment = function(){
   if($scope.body === '') { return; }
