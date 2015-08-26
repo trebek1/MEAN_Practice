@@ -169,6 +169,7 @@ app.controller('MainCtrl', ['$scope', 'posts', 'auth', function($scope, posts, a
   $scope.test = 'Hello world!';
   $scope.posts = posts.posts;  
   $scope.isLoggedIn = auth.isLoggedIn;
+  $scope.currentUser = auth.currentUser;
   
   $scope.addPost = function(){
   	if(!$scope.title || $scope.title === ''){
@@ -176,10 +177,12 @@ app.controller('MainCtrl', ['$scope', 'posts', 'auth', function($scope, posts, a
   	}
   	posts.create({
      title: $scope.title,
-     link: $scope.link
-   }); 
+     link: $scope.link, 
+     author: $scope.currentUser
+   });  
   	$scope.title = '';
   	$scope.link = '';
+
   	};
   $scope.incrementUpvotes = function(post){
   	posts.upvote(post);
